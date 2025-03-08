@@ -1,0 +1,68 @@
+/* Main container styles */
+
+.wpt-controls {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.search #wpt-search {
+    width: 300px;
+}
+
+.filter #wpt-category-filter{
+    width: 150px;
+}
+
+td.wpt-image-cell {
+    text-align: center !important;
+}
+
+td.wpt-image-cell img {
+    max-width: 80px;
+    max-height: 80px;
+    object-fit: contain;
+}
+
+td.wpt-quantity-cell input {
+    max-width: 80px;
+}
+
+/* Search and filter controls */
+#wpt-search, 
+#wpt-category-filter {
+    margin-bottom: 10px;
+    padding: 8px;
+}
+
+/* Table styles */
+.wholesale-product-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.wholesale-product-table th, .wholesale-product-table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: start;
+}
+
+/* Stock status */
+.wholesale-product-table .wpt-stock-cell {
+    color: green;
+}
+
+/* Variation select dropdown */
+.wpt-variation-select {
+    margin-top: 6px;
+}
+
+/* Quantity input */
+.wpt-quantity {
+    width: 60px;
+}
+
+/* Pagination container */
+#wpt-pagination {
+    margin-top: 10px;
+}
