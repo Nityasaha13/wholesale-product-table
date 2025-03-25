@@ -1,9 +1,12 @@
 <?php
+
 /*
 Plugin Name: Wholesale Product Table for WooCommerce
 Description: Displays a wholesale product table via a shortcode with configurable columns, AJAX add-to-cart, variable product dropdowns (with updated price and image), pagination, search, and category filtering.
 Version: 1.0
-Author: Crescentek
+Author: Nitya Saha
+Requires plugins: woocommerce
+Author URI: https://profiles.wordpress.org/nityasaha/
 Text Domain: wholesale-product-table
 */
 
@@ -56,6 +59,7 @@ class Wholesale_Product_Table_Plugin {
 
     public function addon_plugin_links( $links, $file ) {
         if ( $file === $this->plugin_basename ) {
+            $links[] = __( '<a href="https://buymeacoffee.com/nityasaha">Donate</a>', 'wholesale-product-table' );
             $links[] = __( 'Made with Love ❤️', 'wholesale-product-table' );
         }
 
@@ -134,7 +138,7 @@ class Wholesale_Product_Table_Plugin {
                 'cart_url' => wc_get_cart_url()
             ) );
             // Enqueue our CSS file.
-            wp_enqueue_style( 'wpt-style', plugin_dir_url( __FILE__ ) . 'assets/css/wpt.css', array(), WPTW_VERSION );
+            wp_enqueue_style( 'wpt-style', plugin_dir_url( __FILE__ ) . 'assets/css/wpt.css', array(), WPTWW_VERSION );
         }
     }
 
