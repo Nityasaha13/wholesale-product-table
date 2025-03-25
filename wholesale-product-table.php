@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-define( 'WPT_VERSION', '1.0' );
+define( 'WPTW_VERSION', '1.0' );
 
 // Ensure WooCommerce is active.
 if ( ! in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
@@ -56,8 +56,7 @@ class Wholesale_Product_Table_Plugin {
 
     public function addon_plugin_links( $links, $file ) {
         if ( $file === $this->plugin_basename ) {
-            $links[] = '<a href="javascript:void(0);" rel="noopener">' .
-                       __( 'Donate', 'wholesale-product-table' ) . '</a>';
+            $links[] = __( 'Made with Love ❤️', 'wholesale-product-table' );
         }
 
         return $links;
@@ -128,14 +127,14 @@ class Wholesale_Product_Table_Plugin {
     public function enqueue_scripts() {
         if ( class_exists( 'WooCommerce' ) ) {
             // Enqueue our JS file.
-            wp_enqueue_script( 'wpt-script', plugin_dir_url( __FILE__ ) . 'assets/js/wpt.js', array( 'jquery' ), WPT_VERSION, true );
+            wp_enqueue_script( 'wpt-script', plugin_dir_url( __FILE__ ) . 'assets/js/wpt.js', array( 'jquery' ), WPTW_VERSION, true );
             wp_localize_script( 'wpt-script', 'wpt_ajax_params', array(
                 'ajax_url' => admin_url( 'admin-ajax.php' ),
                 'nonce'    => wp_create_nonce( 'wpt_ajax_nonce' ),
                 'cart_url' => wc_get_cart_url()
             ) );
             // Enqueue our CSS file.
-            wp_enqueue_style( 'wpt-style', plugin_dir_url( __FILE__ ) . 'assets/css/wpt.css', array(), WPT_VERSION );
+            wp_enqueue_style( 'wpt-style', plugin_dir_url( __FILE__ ) . 'assets/css/wpt.css', array(), WPTW_VERSION );
         }
     }
 
