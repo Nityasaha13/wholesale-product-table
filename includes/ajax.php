@@ -28,7 +28,7 @@ if (! class_exists('WPTW_Ajax')) {
             $filter_category = isset($_POST['category']) ? sanitize_text_field($_POST['category']) : 'all';
             $page            = isset($_POST['page']) ? absint($_POST['page']) : 1;
 
-            $selected_columns = get_option('wpt_selected_columns', array('image', 'product_name', 'sku', 'category', 'price', 'in_stock', 'quantity', 'add_to_cart'));
+            $selected_columns = get_option('wptw_selected_columns', array('image', 'product_name', 'sku', 'category', 'price', 'in_stock', 'quantity', 'add_to_cart'));
 
             $args = array(
                 'post_type'      => 'product',

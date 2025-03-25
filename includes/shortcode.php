@@ -11,8 +11,12 @@ if( ! class_exists('WPTW_Shortcode') ){
         }
 
         public function init(){
-            // Shortcode.
-            add_shortcode('wholesale_product_table', array($this, 'display_product_table'));
+
+            if(!shortcode_exists('wholesale_product_table')){
+                // Shortcode.
+                add_shortcode('wholesale_product_table', array($this, 'display_product_table'));
+            }
+            
         }
 
         /**
