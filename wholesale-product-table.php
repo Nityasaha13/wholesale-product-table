@@ -86,7 +86,7 @@ if (! class_exists('WPTW_Main')):
 
             if(has_shortcode(  $post->post_content, 'wholesale_product_table')){
                 // Enqueue our JS file.
-                wp_enqueue_script('wpt-script', plugin_dir_url(__FILE__) . 'assets/js/wpt.js', array('jquery'), WPTW_VERSION, true);
+                wp_enqueue_script('wpt-script', plugin_dir_url(__FILE__) . 'assets/js/wpt.js', array('jquery'), WPTW_VERSION, false);
                 wp_localize_script('wpt-script', 'wpt_ajax_params', array(
                     'ajax_url' => admin_url('admin-ajax.php'),
                     'nonce'    => wp_create_nonce('wpt_ajax_nonce'),
