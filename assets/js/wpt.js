@@ -1,42 +1,36 @@
 jQuery(document).ready(function($) {
 
+    // Fetch products via AJAX (for search, filter, pagination)
     function fetchProducts(page) {
-        var query = $('#wpt-search').val();
+        var query    = $('#wpt-search').val();
         var category = $('#wpt-category-filter').val();
         page = page || 1;
-    
-        // Create the loading indicator
+		
+		// Create the loading indicator
         var loadingIndicator = $('<tr id="wpt-table-loading"><td colspan="10"><div class="wpt-cv-spinner"><span class="wpt-spinner"></span></div></td></tr>');
         $('#wpt-table-body').html(loadingIndicator);
-    
-
+		
         $.ajax({
             url: wpt_ajax_params.ajax_url,
             type: 'POST',
             data: {
-                action: 'wpt_product_search',
-                nonce: wpt_ajax_params.nonce,
-                query: query,
+                action:   'wpt_product_search',
+                nonce:    wpt_ajax_params.nonce,
+                query:    query,
                 category: category,
-                page: page
+                page:     page
             },
             success: function(response) {
-                // Remove the spinner once the response is received
+				// Remove the spinner once the response is received
                 $('#wpt-table-loading').remove();
-
-                if (response.success) {
+				
+                if ( response.success ) {
                     $('#wpt-table-body').html(response.data.html);
                     $('#wpt-pagination').html(response.data.pagination);
                 } else {
                     $('#wpt-table-body').html('<tr><td colspan="10">No products found.</td></tr>');
                     $('#wpt-pagination').empty();
                 }
-            },
-            error: function() {
-                // Remove the spinner on error too
-                $('#wpt-table-loading').remove();
-                $('#wpt-table-body').html('<tr><td colspan="10">An error occurred.</td></tr>');
-                $('#wpt-pagination').empty();
             }
         });
     }
@@ -57,6 +51,10 @@ jQuery(document).ready(function($) {
         var pageMatch = link.match(/paged=(\d+)/) || link.match(/page\/(\d+)/);
         var page = pageMatch ? parseInt(pageMatch[1], 10) : 1;
         fetchProducts(page);
+        
+        $('html, body').animate({
+            scrollTop: $("#wpt-table-loading").offset().top - 200
+        }, 200);
     });
 
     // Variation selection: update price and image based on selected option.
@@ -111,7 +109,7 @@ jQuery(document).ready(function($) {
                 if ( response.success ) {
                     // Remove any old View Cart link.
                     $button.siblings('.wpt-view-cart').remove();
-                    $button.after('<a href="'+ wpt_ajax_params.cart_url +'" class="wpt-view-cart" style="margin-left:10px;">View Cart</a>');
+                    $button.after('<a href="'+ wpt_ajax_params.cart_url +'" class="wpt-view-cart">View Cart</a>');
                     // Reset the variation select (optional).
                     if ( $variationSelect.length ) {
                         $variationSelect.prop('selectedIndex', 0);
