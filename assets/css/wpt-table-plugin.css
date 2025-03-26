@@ -1,1 +1,138 @@
 /* Product table plugin style */
+
+.wpt-container-wraper a:hover{
+    color: brown;
+    text-decoration: none;
+}
+
+.wpt-container-wraper a:visited{
+    color: brown;
+}
+
+.wpt-container-wraper a{
+    text-decoration: none !important;
+}
+
+.wpt-container-wraper a:active, .wpt-container-wraper a:focus{
+    color: #000;
+}
+
+
+.wholesale-product-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.wholesale-product-table th, .wholesale-product-table td {
+    /* border: 1px solid #e1e1e1; */
+    padding: 4px 10px;
+    text-align: start;
+    min-width: 100px;
+    max-width: 100px;
+}
+
+.wholesale-product-table thead th {
+    background-color: blanchedalmond;
+    border: 1px solid blanchedalmond;
+    padding: 15px 8px;
+}
+
+.wholesale-product-table tr{
+    border-bottom: 1px solid #f7f7f7;
+}
+
+#wpt-table-body {
+    background-color: #fffbf5;
+}
+
+/* Stock status */
+.wholesale-product-table .wpt-stock-cell {
+    color: green;
+}
+
+/* Variation select dropdown */
+.wpt-variation-select {
+    margin-top: 6px;
+}
+
+.wholesale-product-table thead th {
+    background-color: blanchedalmond;
+    border: 1px solid blanchedalmond;
+}
+
+td.wpt-product-name-cell a{
+    color: #000;
+}
+
+td.wpt-quantity-cell input {
+    max-width: 85px;
+    border-radius: 0;
+    padding: 5px 5px 5px 20px;
+}
+
+button.wpt-add-to-cart {
+    background-color: blanchedalmond;
+    color: black;
+    border: none;
+    border-radius: 0px;
+    padding: 10px 15px;
+    font-weight: 600;
+}
+
+.wholesale-product-table td.wpt-add-to-cart-cell {
+    position: relative;
+}
+
+a.wpt-view-cart {
+    position: absolute;
+    bottom: 12px;
+    left: 30px;
+    font-size: small;
+    font-weight: 600;
+}
+.wpt-pagination-links {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+.wpt-pagination-links a {
+    color: #5a5eff;
+}
+
+.wpt-pagination-links a, .wpt-pagination-links span{
+    font-weight: 600;
+}
+
+
+#wpt-table-body tr:nth-child(odd){
+    background-color: #fbfbfb;
+}
+
+/* #wpt-table-body tr:first-child{
+    background-color: #fffbf5;
+} */
+
+/* overlay Spinner */
+
+.wpt-cv-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100px; /* Adjust as needed */
+}
+
+.wpt-spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border-left-color: #09f;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

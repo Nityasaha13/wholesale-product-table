@@ -48,25 +48,25 @@ if( ! class_exists('WPTW_Settings')){
                 <h1>Wholesale Product Table Settings</h1>
                 <form method="post" action="">
                     <?php wp_nonce_field( 'wpt_save_settings', 'wpt_settings_nonce' ); ?>
-                    <table class="form-table">
+                    <table class="wpt form-table">
                         <tr>
                             <th scope="row">Select Columns to Display</th>
-                            <td>
-                                <label><input type="checkbox" name="selected_columns[]" value="image" <?php checked( in_array( 'image', $selected_columns ) ); ?> /> Image</label><br>
-                                <label><input type="checkbox" name="selected_columns[]" value="product_name" <?php checked( in_array( 'product_name', $selected_columns ) ); ?> /> Product Name</label><br>
-                                <label><input type="checkbox" name="selected_columns[]" value="sku" <?php checked( in_array( 'sku', $selected_columns ) ); ?> /> SKU</label><br>
-                                <label><input type="checkbox" name="selected_columns[]" value="category" <?php checked( in_array( 'category', $selected_columns ) ); ?> /> Category</label><br>
+                            <td class="wpt-input-container">
+                                <label class="wpt-input"><input type="checkbox" name="selected_columns[]" value="image" <?php checked( in_array( 'image', $selected_columns ) ); ?> /> Image</label><br>
+                                <label class="wpt-input"><input type="checkbox" name="selected_columns[]" value="product_name" <?php checked( in_array( 'product_name', $selected_columns ) ); ?> /> Product Name</label><br>
+                                <label class="wpt-input"><input type="checkbox" name="selected_columns[]" value="sku" <?php checked( in_array( 'sku', $selected_columns ) ); ?> /> SKU</label><br>
+                                <label class="wpt-input"><input type="checkbox" name="selected_columns[]" value="category" <?php checked( in_array( 'category', $selected_columns ) ); ?> /> Category</label><br>
                                 <label><input type="checkbox" name="selected_columns[]" value="price" <?php checked( in_array( 'price', $selected_columns ) ); ?> /> Price</label><br>
-                                <label><input type="checkbox" name="selected_columns[]" value="in_stock" <?php checked( in_array( 'in_stock', $selected_columns ) ); ?> /> Stock Status</label><br>
-                                <label><input type="checkbox" name="selected_columns[]" value="quantity" <?php checked( in_array( 'quantity', $selected_columns ) ); ?> /> Quantity</label><br>
-                                <label><input type="checkbox" name="selected_columns[]" value="add_to_cart" <?php checked( in_array( 'add_to_cart', $selected_columns ) ); ?> /> Add to Cart</label><br>
+                                <label class="wpt-input"><input type="checkbox" name="selected_columns[]" value="in_stock" <?php checked( in_array( 'in_stock', $selected_columns ) ); ?> /> Stock Status</label><br>
+                                <label class="wpt-input"><input type="checkbox" name="selected_columns[]" value="quantity" <?php checked( in_array( 'quantity', $selected_columns ) ); ?> /> Quantity</label><br>
+                                <label class="wpt-input"><input type="checkbox" name="selected_columns[]" value="add_to_cart" <?php checked( in_array( 'add_to_cart', $selected_columns ) ); ?> /> Add to Cart</label><br>
                             </td>
                         </tr>
                         <tr>
                             <th>Select Table Style</th>
-                            <td>
-                                <label><input type="radio" name="wpt_table_style" value="default" <?php checked( 'default', $selected_style ); ?> /> Default Style</label><br>
-                                <label><input type="radio" name="wpt_table_style" value="plugin" <?php checked( 'plugin', $selected_style ); ?> /> Plugin Style</label><br>
+                            <td class="wpt-input-container">
+                                <label class="wpt-input"><input type="radio" name="wpt_table_style" value="default" <?php checked( 'default', $selected_style ); ?> /> Default Style</label><br>
+                                <label class="wpt-input"><input type="radio" name="wpt_table_style" value="plugin" <?php checked( 'plugin', $selected_style ); ?> /> Plugin Style</label><br>
                             </td>
                         </tr>
                     </table>
