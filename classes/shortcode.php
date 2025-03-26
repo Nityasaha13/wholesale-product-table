@@ -24,10 +24,8 @@ if (! class_exists('WPTW_Shortcode')) {
          */
         public function display_product_table()
         {
-            $categories = get_terms(array(
-                'taxonomy'   => 'product_cat',
-                'hide_empty' => true,
-            ));
+            $categories = wptw_get_product_categories();
+            
             $selected_columns = get_option('wpt_selected_columns', array('image', 'product_name', 'sku', 'category', 'price', 'in_stock', 'quantity', 'add_to_cart'));
             ob_start();
             ?>

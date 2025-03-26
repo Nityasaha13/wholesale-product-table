@@ -36,13 +36,15 @@ if (! class_exists('WPTW_Main')):
 
             $this->init();
 
-            require_once 'includes/settings.php';
-            require_once 'includes/ajax.php';
-            require_once 'includes/shortcode.php';
         }
 
-
         public function init(){
+
+            require_once 'classes/settings.php';
+            require_once 'classes/ajax.php';
+            require_once 'classes/shortcode.php';
+            require_once 'includes/wpt_global.php';
+
             // Enqueue scripts and styles.
             add_action('wp_enqueue_scripts', array($this, 'frontend_enqueue_scripts'));
             add_action('admin_enqueue_scripts', array($this, 'admin_enqueue_scripts'));
