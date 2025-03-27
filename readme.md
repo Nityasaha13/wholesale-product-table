@@ -25,3 +25,7 @@ Simply add `[wholesale_product_table]` to the content area of your post or page.
 Yes, the plugin lets you configure which columns to display via its settings.
 ### Does it support variable products?
 Absolutely. Variable products are supported with dropdowns that dynamically update the price and image.
+
+<br>
+<img width="757" alt="image" src="https://github.com/user-attachments/assets/db1b38ad-1260-4325-94b0-ff946553aa86" />
+
