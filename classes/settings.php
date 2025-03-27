@@ -38,18 +38,14 @@ if( ! class_exists('WPTW_Settings')){
 
                 update_option( 'wptw_selected_columns', $selected_columns );
                 update_option( 'wptw_table_style', $selected_style );
-                update_option( 'wpt_wholesale_product_opt', $selected_products );
+                update_option( 'wpt_wholesale_products_opt', $selected_products );
                 update_option( 'wpt_wholesale_product_category', $selected_pro_cat );
                 echo '<div class="updated notice is-dismissible"><p>Settings saved.</p></div>';
             }
-            $default_columns = array( 'image', 'product_name', 'sku', 'category', 'price', 'in_stock', 'quantity', 'add_to_cart' );
-            $default_style = 'default';
-            $default_products = 'all';
-            // $default_cat = 'all';
 
-            $selected_columns = get_option( 'wptw_selected_columns', $default_columns );
-            $selected_style = get_option( 'wptw_table_style', $default_style );
-            $selected_products = get_option( 'wpt_wholesale_products_opt', $default_products );
+            $selected_columns = get_option( 'wptw_selected_columns' );
+            $selected_style = get_option( 'wptw_table_style' );
+            $selected_products = get_option( 'wpt_wholesale_products_opt' );
             $selected_pro_cat = get_option( 'wpt_wholesale_product_category' );
             ?>
             <div class="wrap">
@@ -91,11 +87,11 @@ if( ! class_exists('WPTW_Settings')){
                                 <label class="wpt-input">
                                     <?php $categories = wptw_get_product_categories(); ?>
                                     <select name="wpt_category" id="wpt-cat-selecy">
-                                        <option selected disabled>Select a category</option>
+                                        <option value="all" <?php selected( $selected_pro_cat, 'all' , false ) ?>>All Categories</option>
                                         <?php
-                                            if (! is_wp_error($categories) && ! empty($categories)) {
-                                                foreach ($categories as $cat) {
-                                                    echo '<option value="' . esc_attr($cat->term_id) . '"> '. selected(esc_attr($cat->term_id), $selected_pro_cat) .'' . esc_html($cat->name) . '</option>';
+                                            if ( ! is_wp_error( $categories ) && ! empty( $categories ) ) {
+                                                foreach ( $categories as $cat ) {
+                                                    echo '<option value="' . esc_attr( $cat->term_id ) . '" ' . selected( $selected_pro_cat, $cat->term_id, false ) . '>' . esc_html( $cat->name ) . '</option>';
                                                 }
                                             }
                                         ?>

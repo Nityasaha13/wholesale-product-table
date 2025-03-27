@@ -80,6 +80,13 @@ if (! class_exists('WPTW_Main')):
             if (! isset($page_check->ID)) {
                 wp_insert_post($page_data);
             }
+
+            $default_columns = array( 'image', 'product_name', 'category', 'price', 'in_stock', 'quantity', 'add_to_cart' );
+
+            update_option('wptw_selected_columns', $default_columns);
+            update_option('wptw_table_style', 'default');
+            update_option('wpt_wholesale_products_opt', 'all');
+            update_option('wpt_wholesale_product_category', 'all');
         }
 
 
@@ -98,7 +105,6 @@ if (! class_exists('WPTW_Main')):
                 // Enqueue our CSS file.
                 wp_enqueue_style('wpt-style', plugin_dir_url(__FILE__) . 'assets/css/wpt-frontend.css', array(), WPTW_VERSION);
 
-                $default_style = 'default'; // will be saved in option while activating
                 $selected_style = get_option( 'wptw_table_style' );
 
                 if($selected_style === 'plugin'){
