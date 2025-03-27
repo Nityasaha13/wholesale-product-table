@@ -36,13 +36,15 @@ if (! class_exists('WPTW_Main')):
 
             $this->init();
 
-            require_once 'includes/settings.php';
-            require_once 'includes/ajax.php';
-            require_once 'includes/shortcode.php';
         }
 
-
         public function init(){
+
+            require_once 'classes/settings.php';
+            require_once 'classes/ajax.php';
+            require_once 'classes/shortcode.php';
+            require_once 'includes/wpt_global.php';
+
             // Enqueue scripts and styles.
             add_action('wp_enqueue_scripts', array($this, 'frontend_enqueue_scripts'));
             add_action('admin_enqueue_scripts', array($this, 'admin_enqueue_scripts'));
@@ -78,6 +80,13 @@ if (! class_exists('WPTW_Main')):
             if (! isset($page_check->ID)) {
                 wp_insert_post($page_data);
             }
+
+            $default_columns = array( 'image', 'product_name', 'category', 'price', 'in_stock', 'quantity', 'add_to_cart' );
+
+            update_option('wptw_selected_columns', $default_columns);
+            update_option('wptw_table_style', 'default');
+            update_option('wpt_wholesale_products_opt', 'all');
+            update_option('wpt_wholesale_product_category', 'all');
         }
 
 
@@ -96,7 +105,6 @@ if (! class_exists('WPTW_Main')):
                 // Enqueue our CSS file.
                 wp_enqueue_style('wpt-style', plugin_dir_url(__FILE__) . 'assets/css/wpt-frontend.css', array(), WPTW_VERSION);
 
-                $default_style = 'default'; // will be saved in option while activating
                 $selected_style = get_option( 'wptw_table_style' );
 
                 if($selected_style === 'plugin'){
