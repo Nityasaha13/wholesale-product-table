@@ -29,15 +29,19 @@ if (! class_exists('WPTW_Ajax')) {
             $page            = isset($_POST['page']) ? absint($_POST['page']) : 1;
 
             $selected_columns = get_option('wptw_selected_columns', array('image', 'product_name', 'sku', 'category', 'price', 'in_stock', 'quantity', 'add_to_cart'));
+            $selected_ppp = get_option('wptw_wholesale_product_pp', 10);
+            $selected_p_category = get_option('wptw_wholesale_product_category');
 
             $args = array(
                 'post_type'      => 'product',
-                'posts_per_page' => 10,
+                'posts_per_page' => $selected_ppp,
                 'paged'          => $page,
             );
+
             if (! empty($search_query)) {
                 $args['s'] = $search_query;
             }
+
             if ('all' !== $filter_category) {
                 $args['tax_query'] = array(
                     array(

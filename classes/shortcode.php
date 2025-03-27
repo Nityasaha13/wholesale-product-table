@@ -26,7 +26,7 @@ if (! class_exists('WPTW_Shortcode')) {
         {
             $categories = wptw_get_product_categories();
             
-            $selected_columns = get_option('wpt_selected_columns', array('image', 'product_name', 'sku', 'category', 'price', 'in_stock', 'quantity', 'add_to_cart'));
+            $selected_columns = get_option('wptw_selected_columns');
             ob_start();
             ?>
 

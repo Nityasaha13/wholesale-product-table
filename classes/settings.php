@@ -35,18 +35,23 @@ if( ! class_exists('WPTW_Settings')){
                 $selected_style = isset( $_POST['wpt_table_style'] ) ? sanitize_text_field($_POST['wpt_table_style'] ) : '';
                 $selected_products = isset( $_POST['wpt_wholesale_products'] ) ? sanitize_text_field($_POST['wpt_wholesale_products'] ) : '';
                 $selected_pro_cat = isset( $_POST['wpt_category'] ) ? sanitize_text_field($_POST['wpt_category'] ) : '';
+                $selected_pro_pp = isset( $_POST['wpt_wholesale_product_pp'] ) ? sanitize_text_field($_POST['wpt_wholesale_product_pp'] ) : '';
 
                 update_option( 'wptw_selected_columns', $selected_columns );
                 update_option( 'wptw_table_style', $selected_style );
-                update_option( 'wpt_wholesale_products_opt', $selected_products );
-                update_option( 'wpt_wholesale_product_category', $selected_pro_cat );
+                update_option( 'wptw_wholesale_products_opt', $selected_products );
+                update_option( 'wptw_wholesale_product_category', $selected_pro_cat );
+                update_option( 'wptw_wholesale_product_pp', $selected_pro_pp );
+
                 echo '<div class="updated notice is-dismissible"><p>Settings saved.</p></div>';
             }
 
             $selected_columns = get_option( 'wptw_selected_columns' );
             $selected_style = get_option( 'wptw_table_style' );
-            $selected_products = get_option( 'wpt_wholesale_products_opt' );
-            $selected_pro_cat = get_option( 'wpt_wholesale_product_category' );
+            $selected_products = get_option( 'wptw_wholesale_products_opt' );
+            $selected_pro_cat = get_option( 'wptw_wholesale_product_category' );
+            $selected_pro_pp = get_option( 'wptw_wholesale_product_pp' );
+
             ?>
             <div class="wrap">
                 <h1>Wholesale Product Table Settings</h1>
@@ -79,14 +84,13 @@ if( ! class_exists('WPTW_Settings')){
                                 <label class="wpt-input"><input type="radio" name="wpt_wholesale_products" value="all" <?php checked( 'all', $selected_products ); ?>/> All Products</label> 
                                 <label class="wpt-input"><input type="radio" name="wpt_wholesale_products" value="category" <?php checked( 'category', $selected_products ); ?> /> Select a Category</label> 
                             </td>
-                        </tr>
-                        
+                        </tr>                      
                         <tr>
-                            <th>Select Product Category</th>
+                            <th>Select Product Categories</th>
                             <td class="wpt-input-container">
                                 <label class="wpt-input">
                                     <?php $categories = wptw_get_product_categories(); ?>
-                                    <select name="wpt_category" id="wpt-cat-selecy">
+                                    <select name="wpt_category" id="wpt-cat-select">
                                         <option value="all" <?php selected( $selected_pro_cat, 'all' , false ) ?>>All Categories</option>
                                         <?php
                                             if ( ! is_wp_error( $categories ) && ! empty( $categories ) ) {
@@ -97,6 +101,12 @@ if( ! class_exists('WPTW_Settings')){
                                         ?>
                                     </select>
                                 </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Products Per Page</th>
+                            <td class="wpt-input-container">
+                                <label class="wpt-input"><input type="text" name="wpt_wholesale_product_pp" value="<?= $selected_pro_pp  ?>"/></label>  
                             </td>
                         </tr>
                         

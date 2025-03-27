@@ -18,6 +18,7 @@ define('WPTW_VERSION', '1.0');
 
 // Ensure WooCommerce is active.
 if (! in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))) {
+    echo '<div class="updated notice is-dismissible"><p>WooCommerce is required to activate Wholesale Product Table.</p></div>';
     return;
 }
 
@@ -27,9 +28,6 @@ if (! class_exists('WPTW_Main')):
         private $plugin_basename;
 
         public function __construct(){
-            $this->plugin_basename = plugin_basename(__FILE__);
-            add_filter('plugin_action_links_' . $this->plugin_basename, array($this, 'setting_page_link'));
-            add_filter('plugin_row_meta', array($this, 'addon_plugin_links'), 10, 2);
 
             // On activation, create Wholesale Order page.
             register_activation_hook(__FILE__, array($this, 'plugin_activation'));
@@ -40,14 +38,23 @@ if (! class_exists('WPTW_Main')):
 
         public function init(){
 
-            require_once 'classes/settings.php';
-            require_once 'classes/ajax.php';
-            require_once 'classes/shortcode.php';
-            require_once 'includes/wpt_global.php';
+            $this->plugin_basename = plugin_basename(__FILE__);
+            add_filter('plugin_action_links_' . $this->plugin_basename, array($this, 'setting_page_link'));
+            add_filter('plugin_row_meta', array($this, 'addon_plugin_links'), 10, 2);
+
+            $this->include_required_files();
 
             // Enqueue scripts and styles.
             add_action('wp_enqueue_scripts', array($this, 'frontend_enqueue_scripts'));
             add_action('admin_enqueue_scripts', array($this, 'admin_enqueue_scripts'));
+        }
+
+        public function include_required_files(){
+
+            require_once 'classes/settings.php';
+            require_once 'classes/ajax.php';
+            require_once 'classes/shortcode.php';
+            require_once 'includes/wpt_global.php';
         }
 
         public function setting_page_link($links){
@@ -81,12 +88,32 @@ if (! class_exists('WPTW_Main')):
                 wp_insert_post($page_data);
             }
 
+            self::default_setting_options();
+        }
+
+        public function default_setting_options(){
+            
             $default_columns = array( 'image', 'product_name', 'category', 'price', 'in_stock', 'quantity', 'add_to_cart' );
 
-            update_option('wptw_selected_columns', $default_columns);
-            update_option('wptw_table_style', 'default');
-            update_option('wpt_wholesale_products_opt', 'all');
-            update_option('wpt_wholesale_product_category', 'all');
+            if( ! get_option('wptw_selected_columns') ){
+                update_option('wptw_selected_columns', $default_columns);
+            }
+                
+            if( ! get_option('wptw_table_style') ){
+                update_option('wptw_table_style', 'default');
+            }
+                
+            if( ! get_option('wptw_wholesale_products_opt') ){
+                update_option('wptw_wholesale_products_opt', 'all');
+            }
+
+            if( ! get_option('wptw_wholesale_product_category') ){
+                update_option('wptw_wholesale_product_category', 'all');
+            }
+                
+            if( ! get_option('wptw_wholesale_product_pp') ){
+                update_option('wptw_wholesale_product_pp', 10);
+            }
         }
 
 
