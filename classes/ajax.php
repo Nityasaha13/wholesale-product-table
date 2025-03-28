@@ -24,9 +24,9 @@ if (! class_exists('WPTW_Ajax')) {
         public function ajax_product_search(){
             check_ajax_referer('wpt_ajax_nonce', 'nonce');
 
-            $search_query    = isset($_POST['query']) ? sanitize_text_field($_POST['query']) : '';
-            $filter_category = isset($_POST['category']) ? sanitize_text_field($_POST['category']) : 'all';
-            $page            = isset($_POST['page']) ? absint($_POST['page']) : 1;
+            $search_query    = isset($_POST['query']) ? sanitize_text_field(wp_unslash($_POST['query'])) : '';
+            $filter_category = isset($_POST['category']) ? sanitize_text_field(wp_unslash($_POST['category'])) : 'all';
+            $page            = isset($_POST['page']) ? absint(wp_unslash($_POST['page'])) : 1;
 
             $selected_columns = get_option('wptw_selected_columns', array('image', 'product_name', 'sku', 'category', 'price', 'in_stock', 'quantity', 'add_to_cart'));
             $selected_ppp = get_option('wptw_wholesale_product_pp', 10);
@@ -71,7 +71,7 @@ if (! class_exists('WPTW_Ajax')) {
             $parent_id       = isset($_POST['product_id']) ? intval($_POST['product_id']) : 0;
             $variation_id    = isset($_POST['variation_id']) ? intval($_POST['variation_id']) : 0;
             $quantity        = isset($_POST['quantity']) ? intval($_POST['quantity']) : 1;
-            $variation_attrs = isset($_POST['variation_attrs']) ? json_decode(stripslashes($_POST['variation_attrs']), true) : array();
+            $variation_attrs = isset($_POST['variation_attrs']) ? json_decode(wp_verify_nonce(wp_unslash($_POST['variation_attrs']), true)) : array();
 
             if ($parent_id && function_exists('WC')) {
                 if ($variation_id > 0) {
@@ -103,7 +103,7 @@ if (! class_exists('WPTW_Ajax')) {
                     <tr>
                         <?php if (in_array('image', $selected_columns)) : ?>
                             <td class="wpt-image-cell">
-                                <?php echo $product->get_image(); ?>
+                                <?php echo wp_kses_post($product->get_image()); ?>
                             </td>
                         <?php endif; ?>
 
@@ -145,7 +145,7 @@ if (! class_exists('WPTW_Ajax')) {
                         <?php endif; ?>
 
                         <?php if (in_array('sku', $selected_columns)) : ?>
-                            <td class="wpt-sku-cell"><?php echo $product->get_sku(); ?></td>
+                            <td class="wpt-sku-cell"><?php echo wp_kses_post($product->get_sku()); ?></td>
                         <?php endif; ?>
 
                         <?php if (in_array('category', $selected_columns)) : ?>
@@ -162,7 +162,7 @@ if (! class_exists('WPTW_Ajax')) {
 
                         <?php if (in_array('price', $selected_columns)) : ?>
                             <td class="wpt-price-cell">
-                                <?php echo $product->get_price_html(); ?>
+                                <?php echo wp_kses_post($product->get_price_html()); ?>
                             </td>
                         <?php endif; ?>
 
@@ -170,8 +170,8 @@ if (! class_exists('WPTW_Ajax')) {
                             <td class="wpt-stock-cell">
                                 <?php
                                 if ($product->is_in_stock()) {
-                                    $stock = $product->get_stock_quantity();
-                                    echo $stock ? $stock . ' in stock' : 'In stock';
+                                    $stock = $product ->get_stock_quantity();
+                                    echo $stock ? esc_html($stock . ' in stock') : 'In stock';
                                 } else {
                                     echo 'Out of stock';
                                 }

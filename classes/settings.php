@@ -29,22 +29,23 @@ if( ! class_exists('WPTW_Settings')){
         }
 
         public function admin_settings_page() {
-            if ( isset( $_POST['wpt_settings_nonce'] ) && wp_verify_nonce( $_POST['wpt_settings_nonce'], 'wpt_save_settings' ) ) {
+            if ( isset( $_POST['wpt_settings_nonce'] ) && wp_verify_nonce( wp_unslash( $_POST['wpt_settings_nonce'] ), 'wpt_save_settings' ) ) {
 
-                $selected_columns = isset( $_POST['selected_columns'] ) ? array_map( 'sanitize_text_field', $_POST['selected_columns'] ) : array();
-                $selected_style = isset( $_POST['wpt_table_style'] ) ? sanitize_text_field($_POST['wpt_table_style'] ) : '';
-                $selected_products = isset( $_POST['wpt_wholesale_products'] ) ? sanitize_text_field($_POST['wpt_wholesale_products'] ) : '';
-                $selected_pro_cat = isset( $_POST['wpt_category'] ) ? sanitize_text_field($_POST['wpt_category'] ) : '';
-                $selected_pro_pp = isset( $_POST['wpt_wholesale_product_pp'] ) ? sanitize_text_field($_POST['wpt_wholesale_product_pp'] ) : '';
-
+                $selected_columns = isset( $_POST['selected_columns'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['selected_columns'] ) ) : array();
+                $selected_style = isset( $_POST['wpt_table_style'] ) ? sanitize_text_field( wp_unslash( $_POST['wpt_table_style'] ) ) : '';
+                $selected_products = isset( $_POST['wpt_wholesale_products'] ) ? sanitize_text_field( wp_unslash( $_POST['wpt_wholesale_products'] ) ) : '';
+                $selected_pro_cat = isset( $_POST['wpt_category'] ) ? sanitize_text_field( wp_unslash( $_POST['wpt_category'] ) ) : '';
+                $selected_pro_pp = isset( $_POST['wpt_wholesale_product_pp'] ) ? sanitize_text_field( wp_unslash( $_POST['wpt_wholesale_product_pp'] ) ) : '';
+            
                 update_option( 'wptw_selected_columns', $selected_columns );
                 update_option( 'wptw_table_style', $selected_style );
                 update_option( 'wptw_wholesale_products_opt', $selected_products );
                 update_option( 'wptw_wholesale_product_category', $selected_pro_cat );
                 update_option( 'wptw_wholesale_product_pp', $selected_pro_pp );
-
+            
                 echo '<div class="updated notice is-dismissible"><p>Settings saved.</p></div>';
             }
+            
 
             $selected_columns = get_option( 'wptw_selected_columns' );
             $selected_style = get_option( 'wptw_table_style' );
@@ -106,7 +107,7 @@ if( ! class_exists('WPTW_Settings')){
                         <tr>
                             <th>Products Per Page</th>
                             <td class="wpt-input-container">
-                                <label class="wpt-input"><input type="text" name="wpt_wholesale_product_pp" value="<?= $selected_pro_pp  ?>"/></label>  
+                                <label class="wpt-input"><input type="text" name="wpt_wholesale_product_pp" value="<?php echo esc_attr($selected_pro_pp)  ?>"/></label>  
                             </td>
                         </tr>
                         

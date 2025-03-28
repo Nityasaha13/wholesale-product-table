@@ -1,13 +1,15 @@
 <?php
 
 /*
-Plugin Name: Wholesale Product Table for WooCommerce
-Description: Displays a wholesale product table via a shortcode with configurable columns, AJAX add-to-cart, variable product dropdowns (with updated price and image), pagination, search, and category filtering.
-Version: 1.0
-Author: Nitya Saha
-Requires plugins: woocommerce
-Author URI: https://profiles.wordpress.org/nityasaha/
-Text Domain: wholesale-product-table
+    * Plugin Name: Wholesale Product Table for WooCommerce
+    * Description: Displays a wholesale product table via a shortcode with configurable columns, AJAX add-to-cart, variable product dropdowns (with updated price and image), pagination, search, and category filtering.
+    * Version: 1.0
+    * Author: Nitya Saha
+    * Requires plugins: woocommerce
+    * Author URI: https://profiles.wordpress.org/nityasaha/
+    * Text Domain: wholesale-product-table
+    * License: GPLv2 or later
+    * License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
 
 if (! defined('ABSPATH')) {
@@ -76,20 +78,28 @@ if (! class_exists('WPTW_Main')):
         public function plugin_activation(){
             $page_title   = 'Wholesale Order';
             $page_content = '[wholesale_product_table]';
-            $page_check   = get_page_by_title($page_title);
-            $page_data    = array(
-                'post_type'    => 'page',
-                'post_title'   => $page_title,
-                'post_content' => $page_content,
-                'post_status'  => 'publish',
-                'post_author'  => get_current_user_id(),
-            );
-            if (! isset($page_check->ID)) {
+            
+            // Use WP_Query to check for the page by title
+            $page_check = new WP_Query(array(
+                'post_type'   => 'page',
+                'post_title'  => $page_title,
+                'posts_per_page' => 1,
+            ));
+        
+            if (!$page_check->have_posts()) {
+                $page_data = array(
+                    'post_type'    => 'page',
+                    'post_title'   => $page_title,
+                    'post_content' => $page_content,
+                    'post_status'  => 'publish',
+                    'post_author'  => get_current_user_id(),
+                );
                 wp_insert_post($page_data);
             }
-
+        
             self::default_setting_options();
         }
+        
 
         public function default_setting_options(){
             

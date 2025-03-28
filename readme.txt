@@ -1,13 +1,15 @@
-=== Wholesale Product Table ===
+=== Wholesale Product Table for WooCommerce ===
 Contributors: nityasaha
 Tags: woocommerce, product-table, wholesale, wholsesale-table, wholsesale-order
 Donate link: https://buymeacoffee.com/nityasaha
 Requires at least: 5.0
-Tested up to: 6.2
+Tested up to: 6.7
 Requires PHP: 7.0
 Stable tag: 1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
+
+Displays a wholesale product table via a shortcode with configurable columns.
 
 == Description ==
 The Wholesale Product Table plugin displays a wholesale product table via a shortcode with configurable columns. It offers AJAX add-to-cart functionality, variable product dropdowns (with updated price and image), pagination, search, and category filtering – making it easy for wholesale customers to browse and purchase products.
