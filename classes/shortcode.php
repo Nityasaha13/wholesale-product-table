@@ -27,6 +27,8 @@ if (! class_exists('WPTW_Shortcode')) {
             $categories = wptw_get_product_categories();
             
             $selected_columns = get_option('wptw_selected_columns');
+            $selected_category_opt = get_option('wptw_wholesale_products_opt') ?? '';
+
             ob_start();
             ?>
 
@@ -35,6 +37,7 @@ if (! class_exists('WPTW_Shortcode')) {
                     <div class="search">
                         <input type="text" id="wpt-search" placeholder="Search products..." />
                     </div>
+                    <?php if( $selected_category_opt === 'all' ) : ?>
                     <div class="filter">
                         <select id="wpt-category-filter">
                             <option value="all">All Categories</option>
@@ -47,6 +50,7 @@ if (! class_exists('WPTW_Shortcode')) {
                             ?>
                         </select>
                     </div>
+                    <?php endif; ?>
                 </div>
                 <table class="wholesale-product-table">
                     <thead>

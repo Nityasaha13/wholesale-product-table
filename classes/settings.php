@@ -80,14 +80,14 @@ if( ! class_exists('WPTW_Settings')){
                             </td>
                         </tr>
                         <tr>
-                            <th>Select Products</th>
+                            <th>Select Wholesale Products</th>
                             <td class="wpt-input-container">
                                 <label class="wpt-input"><input type="radio" name="wpt_wholesale_products" value="all" <?php checked( 'all', $selected_products ); ?>/> All Products</label> 
                                 <label class="wpt-input"><input type="radio" name="wpt_wholesale_products" value="category" <?php checked( 'category', $selected_products ); ?> /> Select a Category</label> 
                             </td>
-                        </tr>                      
-                        <tr>
-                            <th>Select Product Categories</th>
+                        </tr>                   
+                        <tr class="wpt-category-dropdown">
+                            <th>Select a Category as Wholesale Product</th>
                             <td class="wpt-input-container">
                                 <label class="wpt-input">
                                     <?php $categories = wptw_get_product_categories(); ?>

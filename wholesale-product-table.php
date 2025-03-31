@@ -154,6 +154,7 @@ if (! class_exists('WPTW_Main')):
 
         public function admin_enqueue_scripts(){
             wp_enqueue_style('wpt-admin-style', plugin_dir_url(__FILE__) . 'assets/css/wpt-admin.css', array(), WPTW_VERSION);
+            wp_enqueue_script('wpt-admin-script', plugin_dir_url(__FILE__) . 'assets/js/wpt-admin.js', array('jquery'), WPTW_VERSION, false);
         }
         
     }

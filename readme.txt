@@ -9,10 +9,10 @@ Stable tag: 1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Displays a wholesale product table via a shortcode with configurable columns.
+Displays your products in a table with a shortcode, wholesale buyers can order in bulk.
 
 == Description ==
-The Wholesale Product Table plugin displays a wholesale product table via a shortcode with configurable columns. It offers AJAX add-to-cart functionality, variable product dropdowns (with updated price and image), pagination, search, and category filtering – making it easy for wholesale customers to browse and purchase products.
+The Wholesale Product Table plugin displays a your products in a table with a shortcode with configurable columns. It offers AJAX add-to-cart functionality, variable product dropdowns (with updated price and image), pagination, search, and category filtering – making it easy for wholesale customers to browse and purchase products.
 
 == Features ==
 * Display wholesale product tables with configurable columns.
