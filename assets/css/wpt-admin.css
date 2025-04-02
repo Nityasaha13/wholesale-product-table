@@ -2,7 +2,7 @@
 
 td.wpt-input-container {
     display: flex;
-    gap: 5px;
+    gap: 10px;
 }
 
 .wpt.form-table td{
