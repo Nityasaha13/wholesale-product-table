@@ -136,3 +136,18 @@ a.wpt-view-cart {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+
+.wpt-sort {
+    align-content: center;
+    padding-bottom: 10px;
+}
+
+select#wpt-sort-select {
+    border: none;
+}
+
+select#wpt-sort-select:focus-visible {
+    border: none;
+    outline: none;
+}

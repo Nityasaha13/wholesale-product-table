@@ -1,4 +1,11 @@
-# Wholesale Product Table
+# Wholesale Product Table 
+
+## Techstack
+- PHP
+- HTML
+- CSS
+- JS
+- React
 
 ## Overview
 The **Wholesale Product Table** plugin displays a wholesale product table via a shortcode with configurable columns. It features AJAX add-to-cart functionality, dynamic variable product dropdowns (with updated price and image), pagination, search, and category filtering – all designed to streamline the wholesale purchasing experience.
@@ -28,4 +35,3 @@ Absolutely. Variable products are supported with dropdowns that dynamically upda
 
 <br>
 <img width="757" alt="image" src="https://github.com/user-attachments/assets/db1b38ad-1260-4325-94b0-ff946553aa86" />
-

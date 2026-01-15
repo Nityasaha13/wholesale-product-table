@@ -4,6 +4,7 @@ jQuery(document).ready(function($) {
     function fetchProducts(page) {
         var query    = $('#wpt-search').val();
         var category = $('#wpt-category-filter').val();
+        var sort = $('#wpt-sort-select').val();
         page = page || 1;
 		
 		// Create the loading indicator
@@ -18,6 +19,7 @@ jQuery(document).ready(function($) {
                 nonce:    wpt_ajax_params.nonce,
                 query:    query,
                 category: category,
+                sort:     sort,
                 page:     page
             },
             success: function(response) {
@@ -42,7 +44,7 @@ jQuery(document).ready(function($) {
     $('#wpt-search').on('keyup', function() {
         fetchProducts(1);
     });
-    $('#wpt-category-filter').on('change', function() {
+    $('#wpt-category-filter, #wpt-sort-select').on('change', function() {
         fetchProducts(1);
     });
     $('#wpt-pagination').on('click', 'a.page-numbers', function(e) {

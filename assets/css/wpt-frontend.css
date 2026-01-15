@@ -45,3 +45,7 @@ td.wpt-no-products {
 .wpt-container-wraper {
     padding: 15px 0px;
 }
+
+.wpt-product-count .wpt-product-count-cell {
+    text-align: center;
+}

@@ -10,3 +10,10 @@ td.wpt-input-container {
     text-align: left;
     padding: 20px 10px 20px 0;
 }
+
+div#wptw-admin-settings {
+    /* width: 98%; */
+    margin-right: 20px;
+}
+
+

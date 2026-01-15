@@ -7,28 +7,121 @@ if( ! class_exists('WPTW_Settings')){
 
     class WPTW_Settings{
 
-        public function __construct(){
-            $this->init();
+        public function __construct() {
+        $this->init();
+    }
+
+    public function init() {
+        // Admin settings page.
+        add_action('admin_menu', array($this, 'register_admin_menu'));
+        
+        // Hook the method properly to the class instance
+        add_filter('woocommerce_get_price_html', array($this, 'show_wholesale_price_html'), 20, 2);
+    }
+
+    public function register_admin_menu() {
+        add_menu_page(
+            'Wholesale Product Table Settings',
+            'Wholesale Table',
+            'manage_options',
+            'wholesale-product-table-settings',
+            array($this, 'admin_settings_page'),
+            'dashicons-admin-generic',
+            56
+        );
+    }
+
+    public function admin_settings_page() {
+        include_once WPTP_PLUGIN_BASE_PATH . 'admin/settings.php';
+    }
+
+    public function apply_discount_settings($price, $product) {
+        $enabled_discounts = get_option('wpt_enabled_wholesale_discount');
+        $discount_type = get_option('wpt_wholesale_discount_type');
+        $discount_value = get_option('wpt_wholesale_discount_value');
+        $include_categories_raw = get_option('wpt_include_categories', '');
+        $exclude_categories_raw = get_option('wpt_exclude_categories', '');
+
+        // Handle empty values and explode by comma
+        $include_categories = array();
+        $exclude_categories = array();
+
+        if (!empty($include_categories_raw)) {
+            $include_categories = array_filter(array_map('intval', array_map('trim', explode(',', $include_categories_raw))));
         }
 
-        public function init(){
-            // Admin settings page.
-            add_action( 'admin_menu', array( $this, 'register_admin_menu' ) );
+        if (!empty($exclude_categories_raw)) {
+            $exclude_categories = array_filter(array_map('intval', array_map('trim', explode(',', $exclude_categories_raw))));
         }
 
-        public function register_admin_menu() {
-            add_menu_page(
-                'Wholesale Product Table Settings',
-                'Wholesale Table',
-                'manage_options',
-                'wholesale-product-table-settings',
-                array( $this, 'admin_settings_page' ),
-                'dashicons-admin-generic',
-                56
-            );
+        // Check if wholesale discount is enabled and has a valid value
+        if ($enabled_discounts != 'wholesale_discount_on' || empty($discount_value) || $discount_value <= 0) {
+            return $price;
         }
 
-        public function admin_settings_page() {
+        // Skip variable products
+        if ($product->is_type('variable')) {
+            return $price;
+        }
+
+        // Get product categories
+        $product_categories = wp_get_post_terms($product->get_id(), 'product_cat', array('fields' => 'ids'));
+        
+        if (is_wp_error($product_categories)) {
+            return $price;
+        }
+
+        // Check include categories (if not empty, product must be in one of these categories)
+        if (!empty($include_categories)) {
+            if (empty(array_intersect($product_categories, $include_categories))) {
+                return $price; // Product not in included categories
+            }
+        }
+
+        // Check exclude categories (if product is in any excluded category, skip discount)
+        if (!empty($exclude_categories)) {
+            if (!empty(array_intersect($product_categories, $exclude_categories))) {
+                return $price; // Product is in excluded categories
+            }
+        }
+
+        // Apply discount based on type
+        $discounted_price = $price;
+        
+        if ($discount_type === 'percentage') {
+            $discounted_price = $price - ($price * ($discount_value / 100));
+        } elseif ($discount_type === 'fixed') {
+            $discounted_price = $price - $discount_value;
+        }
+
+        // Ensure price doesn't go below zero
+        return max(0, $discounted_price);
+    }
+
+    public function show_wholesale_price_html($price_html, $product) {
+        // Get the original price
+        $original_price = $product->get_price();
+        
+        // Skip if no original price
+        if (empty($original_price)) {
+            return $price_html;
+        }
+
+        // Apply discount settings
+        $discounted_price = $this->apply_discount_settings($original_price, $product);
+
+        // Only modify price HTML if discount is applied
+        if ($discounted_price < $original_price && $discounted_price >= 0) {
+            $price_html = '<span class="wholesale-label">Wholesale Price: </span>';
+            $price_html .= '<del>' . wc_price($original_price) . '</del> ';
+            $price_html .= '<ins>' . wc_price($discounted_price) . '</ins>';
+        }
+
+        return $price_html;
+    }
+
+        //No use of this function, but keeping it for future use.
+        public function admin_settings_page_backup() {
             if ( isset( $_POST['wpt_settings_nonce'] ) && wp_verify_nonce( wp_unslash( $_POST['wpt_settings_nonce'] ), 'wpt_save_settings' ) ) {
 
                 $selected_columns = isset( $_POST['selected_columns'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['selected_columns'] ) ) : array();
@@ -119,7 +212,5 @@ if( ! class_exists('WPTW_Settings')){
         }
 
     }
-
-    new WPTW_Settings();
 
 }
